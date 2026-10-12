@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <title>标注校对助手 · 设置</title>
+  <link rel="stylesheet" href="options.css" />
+</head>
+<body>
+  <div class="wrap">
+    <h1>标注校对助手 · 设置</h1>
+
+    <section class="card">
+      <h2>引擎开关</h2>
+      <label class="switch-row">
+        <input type="checkbox" id="modelEnabled" />
+        <span><b>模型层（深度校对）</b>：查字词歧义、语义不当、描述不对。需要配置下方后端。</span>
+      </label>
+      <label class="switch-row">
+        <input type="checkbox" id="sensitiveMode" />
+        <span><b>敏感数据模式</b>：开启后文本只允许发往"内网"类型后端，公有云后端将被停用。处理客户委托或未公开数据时务必开启。</span>
+      </label>
+    </section>
+
+    <section class="card">
+      <h2>校对后端（二选一切换）</h2>
+      <p id="activeBackendNote" class="hint active-note"></p>
+      <div id="backendList" class="backend-list"></div>
+
+      <div id="backendForm" class="backend-form">
+        <div class="field">
+          <label>接口地址（baseUrl）</label>
+          <input type="text" id="f_baseUrl" placeholder="https://api.example.com/v1" />
+          <p class="hint">OpenAI 兼容端点，通常以 /v1 结尾；内网服务一般形如 https://llm-gateway.xxx.com/v1</p>
+        </div>
+        <div class="field">
+          <label>接口密钥（API Key）</label>
+          <input type="password" id="f_apiKey" placeholder="sk-...（内网服务如用自定义请求头鉴权可留空）" />
+        </div>
+        <div class="field">
+          <label>模型名（model）</label>
+          <input type="text" id="f_model" placeholder="如 deepseek-flash / qwen3.5-flash / 内网模型名" />
+        </div>
+        <div class="field">
+          <label>自定义请求头（内网鉴权常用）</label>
+          <div id="headerRows"></div>
+          <button id="addHeader" class="mini">+ 添加请求头</button>
+        </div>
+        <div class="actions">
+          <button id="saveBackend" class="primary">保存配置</button>
+          <button id="grantPermission" class="ghost">授权该站点访问</button>
+          <button id="testBackend" class="ghost">测试连通性</button>
+        </div>
+        <div id="testResult" class="test-result hidden"></div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>规则层选项（离线、免费）</h2>
+      <label class="switch-row"><input type="checkbox" id="opt_punctuation" /><span>标点与格式规范（重复标点、全角数字、中英标点混用）</span></label>
+      <label class="switch-row"><input type="checkbox" id="opt_space" /><span>中英文之间建议加空格</span></label>
+      <label class="switch-row"><input type="checkbox" id="opt_dediao" /><span>"的/得"、"在/再"混用提示（保守提示，需人工确认）</span></label>
+      <p id="ruleStats" class="hint"></p>
+    </section>
+
+    <div id="toast" class="toast hidden"></div>
+  </div>
+  <script src="options.js" type="module"></script>
+</body>
+</html>

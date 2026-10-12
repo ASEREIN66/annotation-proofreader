@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <title>标注校对助手</title>
+  <link rel="stylesheet" href="sidepanel.css" />
+</head>
+<body>
+  <header class="header">
+    <div class="header-top">
+      <h1>标注校对助手</h1>
+      <button id="openOptions" class="icon-btn" title="设置">设置</button>
+    </div>
+    <div class="status-row">
+      <span id="backendChip" class="chip">后端未配置</span>
+      <span id="sensitiveChip" class="chip chip-warn hidden">敏感模式</span>
+      <span id="modelChip" class="chip">模型层关闭</span>
+    </div>
+  </header>
+
+  <main class="main">
+    <section class="input-area">
+      <textarea id="inputText" placeholder="粘贴或选中文本后在此校对。也可在网页上选中文本，点击浮动“校对”按钮。"></textarea>
+      <div class="input-meta">
+        <span id="charCount">0 字</span>
+        <button id="btnProofread" class="primary-btn">开始校对</button>
+      </div>
+    </section>
+
+    <section id="engineStatus" class="engine-status hidden"></section>
+
+    <section id="summary" class="summary hidden"></section>
+    <section id="results" class="results"></section>
+  </main>
+
+  <footer class="footer">
+    <span id="rulesInfo">规则引擎已就绪</span>
+  </footer>
+
+  <script src="sidepanel.js" type="module"></script>
+</body>
+</html>

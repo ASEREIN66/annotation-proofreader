@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-page-node-id="cSpWezgQwGVVeFpI3GBPtM">
+<head data-page-node-id="H5BjL8Mjxby5A7wceMcOX4">
+<meta charset="UTF-8" data-page-node-id="ZV7MBVSEp41cVCPIL01H6O">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" data-page-node-id="ra5pHZVKihFjjZGHOIDUIF">
+<title>标注校对助手 · 浏览器插件下载</title>
+<meta name="description" content="面向数据标注场景的浏览器校对插件：选中文本即可检查错别字、歧义词、标点符号、语病与逻辑问题。" data-page-node-id="CKxm7H4bQgeBO34j7LHLRw">
+<link rel="icon" href="icon.png" data-page-node-id="qvTC6ypDZlXhauUUNlHc8a">
+<style>
+  :root {
+    --blue: #2563eb; --blue-d: #1d4ed8; --blue-l: #eff4ff;
+    --text: #1f2937; --text2: #6b7280; --border: #e5e7eb;
+    --bg: #f8fafc; --card: #ffffff;
+    --red: #dc2626; --amber: #d97706; --purple: #7c3aed; --teal: #0d9488; --coral: #ea580c;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font: 15px/1.7 -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+    color: var(--text); background: var(--bg);
+  }
+  a { color: var(--blue); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 0 24px; }
+
+  /* 顶栏 */
+  header { background: #fff; border-bottom: 1px solid var(--border); }
+  header .wrap { display: flex; align-items: center; justify-content: space-between; height: 60px; }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 16px; }
+  .brand img { width: 28px; height: 28px; border-radius: 6px; }
+  nav a { margin-left: 22px; color: var(--text2); font-size: 14px; }
+
+  /* 首屏 */
+  .hero { padding: 64px 0 56px; background: linear-gradient(180deg, #fff 0%, var(--blue-l) 100%); }
+  .hero .wrap { display: grid; grid-template-columns: 1.1fr 1fr; gap: 48px; align-items: center; }
+  .tag { display: inline-block; font-size: 12px; color: var(--blue); background: #fff;
+    border: 1px solid #c7d7fe; border-radius: 999px; padding: 2px 12px; margin-bottom: 16px; }
+  h1 { font-size: 38px; line-height: 1.3; margin-bottom: 16px; }
+  .lead { color: var(--text2); font-size: 16px; margin-bottom: 28px; }
+  .btns { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+  .btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; border-radius: 10px;
+    font-size: 15px; font-weight: 600; border: 1px solid transparent; cursor: pointer; }
+  .btn:hover { text-decoration: none; }
+  .btn-primary { background: var(--blue); color: #fff; box-shadow: 0 6px 18px rgba(37,99,235,.28); }
+  .btn-primary:hover { background: var(--blue-d); }
+  .btn-ghost { background: #fff; color: var(--text); border-color: var(--border); }
+  .btn-ghost:hover { border-color: #c7d2fe; }
+  .meta { margin-top: 14px; font-size: 13px; color: var(--text2); }
+  .meta a { color: var(--text2); text-decoration: underline; }
+
+  /* 首屏右侧演示 */
+  .demo { position: relative; background: #fff; border: 1px solid var(--border); border-radius: 14px;
+    padding: 22px 22px 150px; box-shadow: 0 16px 40px rgba(15,23,42,.08); }
+  .demo .bar { display: flex; gap: 6px; margin-bottom: 16px; }
+  .demo .bar i { width: 10px; height: 10px; border-radius: 50%; background: #e5e7eb; display: block; }
+  .demo .field-label { font-size: 12px; color: var(--text2); margin-bottom: 6px; }
+  .demo .field { border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px; font-size: 14px; background: #fafafa; }
+  .demo mark { background: #bfdbfe; color: inherit; padding: 1px 0; }
+  .demo .fab { display: inline-block; margin-top: 10px; background: var(--blue); color: #fff; font-size: 12px;
+    padding: 4px 14px; border-radius: 999px; box-shadow: 0 4px 12px rgba(37,99,235,.3); }
+  .demo .pop { position: absolute; left: 22px; right: 22px; bottom: 18px; background: #fff;
+    border: 1px solid var(--border); border-radius: 12px; padding: 12px 14px;
+    box-shadow: 0 10px 28px rgba(15,23,42,.14); font-size: 13px; }
+  .pop .t { font-weight: 600; margin-bottom: 4px; }
+  .pop .s { color: #137333; font-size: 12px; margin-bottom: 6px; }
+  .pop .sum { margin-bottom: 4px; }
+
+  /* 通用区块 */
+  section { padding: 64px 0; }
+  h2 { font-size: 26px; margin-bottom: 8px; }
+  .sub { color: var(--text2); margin-bottom: 32px; }
+
+  /* 五类 */
+  .cats { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; }
+  .cat { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 18px 16px; border-top: 3px solid; }
+  .cat b { display: block; font-size: 15px; margin-bottom: 6px; }
+  .cat p { font-size: 13px; color: var(--text2); }
+  .cat code { display: block; margin-top: 10px; font: 12px/1.6 ui-monospace, Menlo, monospace; background: var(--bg);
+    border-radius: 6px; padding: 6px 8px; color: var(--text); white-space: normal; }
+
+  /* 亮点 */
+  .feats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .feat { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 22px; }
+  .feat .ic { width: 36px; height: 36px; border-radius: 9px; background: var(--blue-l); color: var(--blue);
+    display: flex; align-items: center; justify-content: center; font-weight: 700; margin-bottom: 12px; }
+  .feat b { display: block; margin-bottom: 6px; }
+  .feat p { font-size: 14px; color: var(--text2); }
+
+  /* 安装步骤 */
+  .steps { counter-reset: s; display: grid; gap: 12px; }
+  .step { display: grid; grid-template-columns: 44px 1fr; gap: 14px; background: var(--card);
+    border: 1px solid var(--border); border-radius: 12px; padding: 18px 20px; }
+  .step::before { counter-increment: s; content: counter(s); width: 32px; height: 32px; border-radius: 50%;
+    background: var(--blue); color: #fff; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+  .step > div > b { display: block; margin-bottom: 2px; }
+  .step p { font-size: 14px; color: var(--text2); }
+  .kbd { display: inline-block; font: 12px ui-monospace, Menlo, monospace; background: var(--bg);
+    border: 1px solid var(--border); border-radius: 5px; padding: 0 6px; color: var(--text); }
+  .copy { margin-left: 6px; font-size: 12px; border: 1px solid var(--border); background: #fff; border-radius: 5px;
+    padding: 0 8px; cursor: pointer; color: var(--text2); }
+  .copy:hover { color: var(--blue); border-color: #c7d2fe; }
+
+  .note { margin-top: 18px; background: #fffbeb; border: 1px solid #fde68a; border-radius: 10px; padding: 14px 16px; font-size: 14px; }
+  .note b { color: #92400e; }
+
+  /* 常见问题 */
+  details { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 14px 18px; margin-bottom: 10px; }
+  summary { cursor: pointer; font-weight: 600; }
+  details p { margin-top: 8px; font-size: 14px; color: var(--text2); }
+
+  /* 底部下载 */
+  .cta { background: #fff; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); text-align: center; }
+  .cta .btns { justify-content: center; margin-top: 20px; }
+
+  footer { padding: 28px 0 40px; font-size: 13px; color: var(--text2); text-align: center; }
+
+  .toast { position: fixed; left: 50%; bottom: 28px; transform: translateX(-50%); background: #111827; color: #fff;
+    font-size: 13px; padding: 8px 16px; border-radius: 8px; opacity: 0; transition: opacity .2s; pointer-events: none; }
+  .toast.show { opacity: 1; }
+
+  @media (max-width: 860px) {
+    .hero .wrap { grid-template-columns: 1fr; }
+    .cats { grid-template-columns: repeat(2, 1fr); }
+    .feats { grid-template-columns: 1fr; }
+    nav { display: none; }
+    h1 { font-size: 30px; }
+  }
+</style>
+</head>
+<body data-page-node-id="3SeymGtTClqctYFEEskK6j">
+
+<header data-page-node-id="V2eZys3n6H0DBQdL4a6wCX">
+  <div class="wrap" data-page-node-id="qXjIGhrH0oImh1JLIddaHi">
+    <div class="brand" data-page-node-id="CH546FXO9I2XeoB1tnPBoR"><img src="icon.png" alt="" data-page-node-id="DkxgRtuhCbfI9UPsVFGXrc">标注校对助手</div>
+    <nav data-page-node-id="wppHh5mcElQrTipKKPohJq">
+      <a href="#features" data-page-node-id="dHZHULYSk1qmj0DFJSPuhy">功能</a>
+      <a href="#install" data-page-node-id="AOD4x7e5GOA54B4nTlWjvf">安装</a>
+      <a href="#faq" data-page-node-id="O8iABYbzjOrnklLjR6pinz">常见问题</a>
+      <a href="https://github.com/ASEREIN66/annotation-proofreader" target="_blank" rel="noopener" data-page-node-id="VENd6e2yqz1rTilO66zV2n">源码</a>
+    </nav>
+  </div>
+</header>
+
+<!-- 首屏 -->
+<div class="hero" data-page-node-id="iOrfvo9Bm8V0f2zeoKgp3Q">
+  <div class="wrap" data-page-node-id="MH1MYEryuZnQAaqF5iPFVN">
+    <div data-page-node-id="VSHdDFy8CptgcxfAwGjxKT">
+      <span class="tag" data-page-node-id="KAMHW30Xfrjn5CIOAlRnDy">浏览器插件 · v1.1.3 · 免费开源</span>
+      <h1 data-page-node-id="Ucx8IAvI5u1zgNuHWhQXX6">选中文字，<br data-page-node-id="KZMSPJ11YVmLGuw1vID0Zh">一键校对标注文本</h1>
+      <p class="lead" data-page-node-id="XDYI3TYf7bP38M11ZlNqPg">面向数据标注场景的校对工具。在任意网页选中一段文字，点"校对"，几秒内给出错别字、歧义词、标点、语病、逻辑问题清单。本地规则与大模型双引擎，支持公有云接口和公司内网模型。</p>
+      <div class="btns" data-page-node-id="l45bxuOodm0LT8QsDdjc00">
+        <a class="btn btn-primary" href="annotation-proofreader-v1.1.3.zip" download data-page-node-id="TsC4blIzeMG6Fzcimjk3Pa">⬇ 下载插件（约 60KB）</a>
+        <a class="btn btn-ghost" href="#install" data-page-node-id="otASJbwzBtuBfWxjFEJnC3">查看安装步骤</a>
+      </div>
+      <p class="meta" data-page-node-id="MZ6ZOXJI9gkEZE6pN28UK2">支持 Chrome / Edge 116 及以上版本 · <a href="https://github.com/ASEREIN66/annotation-proofreader" target="_blank" rel="noopener" data-page-node-id="WZ94KFlJv7yUL7bc6S50iS">GitHub 源码</a></p>
+    </div>
+
+    <div class="demo" aria-hidden="true" data-page-node-id="eVlz1BnMw74UtUwHGvC56Y">
+      <div class="bar" data-page-node-id="nQWXtVhBONS5h1TghLIOXl"><i data-page-node-id="KTTFWtQE3IkcK60kZJS0xz"></i><i data-page-node-id="DE59mbzn1KhSndcY9nMH0P"></i><i data-page-node-id="ACaXq8Vm1ZrH2XjDyMpEqw"></i></div>
+      <div class="field-label" data-page-node-id="iXTh1jyq7Nd7lWVLLa4Cvk">标注描述</div>
+      <div class="field" data-page-node-id="6UX0zkSbuaWj3Id1Y7yAyD">画面中一名男子<mark data-page-node-id="AWHiEVRIB8D6bkuteThKj4">因该</mark>是在厨房<mark data-page-node-id="7kQ2CsH1N5wrZtBPUOfpTv">按装</mark>热水器，他的动作很熟练<mark data-page-node-id="PAFkgTsKdIbd1Dij9Njxam">,</mark>神情专注。</div>
+      <span class="fab" data-page-node-id="wHQztHBL7ut7WUuYAKsX7d">校对</span>
+      <div class="pop" data-page-node-id="Uu3xRrRXCVEW7AENtL6uLT">
+        <div class="t" data-page-node-id="fRnz3H0LsbwggzmNULKmOL">标注校对结果</div>
+        <div class="s" data-page-node-id="XeDvOBQRQfdfyIhTNSQqhC">✓ 规则层与模型层均已校对</div>
+        <div class="sum" data-page-node-id="zbQECDFgTUfjEcXdOd452f">共发现 3 处问题（其中错别字 2 处、标点 1 处）</div>
+        <a href="#preview" data-page-node-id="3vHX4101YvQUmP9uRhQnjn">查看详情 →</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 五类问题 -->
+<section id="features" data-page-node-id="cln1e8CeiCDJFWqlsBpoMu">
+  <div class="wrap" data-page-node-id="jGpqaUlogCaPkAQxfsmO84">
+    <h2 data-page-node-id="OJeC4NcXVYh35KBbFLVyOZ">检查五类问题</h2>
+    <p class="sub" data-page-node-id="eyRMLnRgnupWjOcqvsXDCV">只指出确实有问题的地方，不过度润色；原文无误时直接告诉你"未发现错误"。平台固定字段名、标签名不算错。</p>
+    <div class="cats" data-page-node-id="wGjDkcKrxlcBlHMC1yviUg">
+      <div class="cat" style="border-top-color:var(--red)" data-page-node-id="SO1ExoHaHD0e9TRIbpxceI"><b data-page-node-id="DIWJ2OUMv0QqLSjDl9oHa1">错别字</b><p data-page-node-id="lfuqIUmaumUB5QPKJU27a1">同音字、形近字、多字漏字</p><code data-page-node-id="avIrdGTmFOF2ozXinLQQ1V">"按装" → "安装"</code></div>
+      <div class="cat" style="border-top-color:var(--amber)" data-page-node-id="hHFxdIHoslfrbbUooctUSa"><b data-page-node-id="C1cvcliEHQJIxnyUIg44V0">歧义词</b><p data-page-node-id="NvFwGAJqUmy2ps2GVNrlBY">容易被误解成别的意思的用词</p><code data-page-node-id="tVJJOoFyQFlHrgQhgtkfTq">"权利" → "权力"（说明原因）</code></div>
+      <div class="cat" style="border-top-color:var(--teal)" data-page-node-id="PZBbjlhsorpsxwAAwJGGdS"><b data-page-node-id="msTHAzn1HaLKpTe3FoTQOl">标点符号</b><p data-page-node-id="53medxLgsORcpqame8I1HV">中英文混用、全半角、引号括号不配对</p><code data-page-node-id="rENCflyn5DR7yfVCQvczgh">"熟练," → "熟练，"</code></div>
+      <div class="cat" style="border-top-color:var(--purple)" data-page-node-id="ZYAiTvAB4AhZHY4aAHCxzs"><b data-page-node-id="Q38PkuZG9AtxvcBMHd5JjM">语病</b><p data-page-node-id="yAqvMeBIZrqCw6x1oSJNZr">搭配不当、成分残缺、语序不当</p><code data-page-node-id="UGZMgygSyB2R8iArgYla0m">"凯旋而归" → "凯旋"</code></div>
+      <div class="cat" style="border-top-color:var(--coral)" data-page-node-id="ByGdh4wy7EnDn9gQjalNfN"><b data-page-node-id="pCqVccc9L22Pzi1JDW0pYa">逻辑问题</b><p data-page-node-id="8HFGj0M3ZyE82hZqtCupM6">前后矛盾、因果不当、表述歧义</p><code data-page-node-id="4r1Wx3QCeyPVLCZFt4fuB9">问题描述 + 修改建议</code></div>
+    </div>
+  </div>
+</section>
+
+<!-- 亮点 -->
+<section id="preview" style="padding-top:0" data-page-node-id="xLojzCwCSwUtnMOmKhkNw1">
+  <div class="wrap" data-page-node-id="C5QZ4a0ACFpEuGZu6CEyCb">
+    <h2 data-page-node-id="UYwxFcwGbQzgg5WEhHTX9A">为什么好用</h2>
+    <p class="sub" data-page-node-id="pRlBm2d7N6xK5QnhMMAldf">悬浮面板只给一句话总结，点"查看详情"在侧边栏看完整清单，不打断标注节奏。</p>
+    <div class="feats" data-page-node-id="UlVYf3ewA7I2STDo07DDqD">
+      <div class="feat" data-page-node-id="xklVkDfUEBtQibHWCtTTV9"><div class="ic" data-page-node-id="ZGK7O52OT5IWr3EnOtWhuc">双</div><b data-page-node-id="hQVkSUttg6i754hCPb5QOo">双引擎校对</b><p data-page-node-id="w2IhhjBwdxEjliY8NhLcEG">本地规则层离线运行、零成本，先筛掉常见错别字和标点；大模型层负责歧义、语病、逻辑这类需要理解语义的问题。</p></div>
+      <div class="feat" data-page-node-id="w3Qrx10qTPuNMX9TOpS409"><div class="ic" data-page-node-id="QAV4tWC2fjx1EA4EZO3Uiz">切</div><b data-page-node-id="QzjyoO1lTuCWVmk5RGGt1S">公有云与内网随时切换</b><p data-page-node-id="v1S4YZaMKgdIoW71aousIG">预置 DeepSeek、通义、智谱、豆包等接口，也可填任意兼容接口或公司内网模型地址，改配置不改代码。</p></div>
+      <div class="feat" data-page-node-id="M8ynkTVVv1RHgnsCtM0IAO"><div class="ic" data-page-node-id="jFT09H7jF91XoGVKzDiOQz">密</div><b data-page-node-id="pHqRKeolUHFfYC6PBcyqAG">敏感数据模式</b><p data-page-node-id="N5rJpYWP9xLYxIqscCMpyL">开启后插件在代码层面禁止把文本发往公有云，只允许走内网模型，适合处理客户委托数据。</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 安装 -->
+<section id="install" style="background:#fff;border-top:1px solid var(--border);border-bottom:1px solid var(--border)" data-page-node-id="9cFyDUmh00ElwAtNESHlYw">
+  <div class="wrap" data-page-node-id="StJuYAhPZHmV3GYYMSQuA9">
+    <h2 data-page-node-id="hqvIwNq1ENj9qKTZqE1sA0">安装步骤（约 3 分钟）</h2>
+    <p class="sub" data-page-node-id="GsVZukrdfWMjCfOf0sXWxn">插件暂未上架应用商店，需要用"开发者模式"手动加载，按下面五步操作即可。</p>
+    <div class="steps" data-page-node-id="Hm7mQGh0t64JNy7XgxNpwL">
+      <div class="step" data-page-node-id="sUtS52jAwo4AEaRORvRCeu"><div data-page-node-id="vQuleuRDt0OxROD8lyEfw0"><b data-page-node-id="F5kp0P70GgHeJT3Vp7v2K0">下载并解压</b><p data-page-node-id="5VvyFucqcEon3ks1fUJJSN">点上方"下载插件"，把 zip 解压到一个固定位置（建议路径里不含中文，例如 <span class="kbd" data-page-node-id="9vWlIPAIzqMDY852gLc8eD">~/Documents/plugins</span>）。<b data-page-node-id="vVxJyGJYJ9CTGNCGMAwWXw">解压后的文件夹不要删除或移动</b>，否则插件会失效。</p></div></div>
+      <div class="step" data-page-node-id="szGrdgenEpMx5D6TlkJDCu"><div data-page-node-id="kxUjcR0zKVl7meh4H9qFnX"><b data-page-node-id="oCgybTdG99leCWenXhQXll">打开扩展程序页</b><p data-page-node-id="AyLVYGdTnQJeZ0LCn7TGDI">Chrome：地址栏输入 <span class="kbd" data-page-node-id="2MpJ7x7RrEbsX7jmI6rKSl">chrome://extensions</span><button class="copy" data-copy="chrome://extensions" data-page-node-id="bndNHWn6iwO4OUGeBbHmiO">复制</button> 并回车。<br data-page-node-id="40IA04FbqFMSRJ5D2kuiUh">Edge：地址栏输入 <span class="kbd" data-page-node-id="d29bLBE6tXFW9TKFyqJZKr">edge://extensions</span><button class="copy" data-copy="edge://extensions" data-page-node-id="GKr3qXHMu18WQNPEJdBKfQ">复制</button> 并回车。</p></div></div>
+      <div class="step" data-page-node-id="CnMhgrNth9TCsi66PVpAXS"><div data-page-node-id="NiBphhCUPfyu0NfBI1h08f"><b data-page-node-id="ahBlL2FPz4jaFSdzeg3ENK">开启开发者模式</b><p data-page-node-id="0XVGRTFx9maSHNsp4TNtsf">Chrome：打开页面<b data-page-node-id="XADbjweVGEtZgcAgtx8oUN">右上角</b>的"开发者模式"开关。<br data-page-node-id="YhdEHIL1otDuPKnu8cjoFK">Edge：打开页面<b data-page-node-id="yrwwtcIa7jWBFF7EXRYvBG">左侧栏下方</b>的"开发人员模式"开关。</p></div></div>
+      <div class="step" data-page-node-id="ygqn02uNpVpFUnUdIMLRhm"><div data-page-node-id="IkgWWtCYaZ2cmafdP2nCPT"><b data-page-node-id="Ks0hRatMKe3kDp3lefa9yG">加载插件</b><p data-page-node-id="L5FEukegVfNk1NZGz1VoDr">Chrome 点"加载已解压的扩展程序"，Edge 点"加载解压缩的扩展"，选择解压出来的 <span class="kbd" data-page-node-id="urF1i7JFbyoHFlzk05KFla">annotation-proofreader</span> 文件夹（选文件夹本身，不要进到里面选文件）。</p></div></div>
+      <div class="step" data-page-node-id="7Ng5hUhwree29T2DwCbxOd"><div data-page-node-id="DA0L63IblN5DEf3VFYLNjs"><b data-page-node-id="mjXetM7plQJ9fXECd0u9MQ">配置模型并测试</b><p data-page-node-id="ynOAwmXM48hOSup9n9WHr9">点浏览器工具栏的拼图图标，把"标注校对助手"固定到工具栏 → 右键插件图标选"选项" → 选择一个模型服务，填入<b data-page-node-id="rktZhaEqW9opHh3hY9R64p">你自己的</b>接口密钥 → 点"授权该站点访问" → 点"测试连通性"，看到"连接成功"即可。</p></div></div>
+    </div>
+    <div class="note" data-page-node-id="ij6TB15ZUTSBkboD6OyQTz"><b data-page-node-id="BNvyTWkgpBGfCvvpngamj0">使用前记得刷新页面：</b>插件安装或更新后，已经打开的网页需要按 <span class="kbd" data-page-node-id="3RUFJIO4KzeDfwEYt1KVI9">Cmd/Ctrl + R</span> 刷新一次，悬浮"校对"按钮才会出现。</div>
+  </div>
+</section>
+
+<!-- 常见问题 -->
+<section id="faq" data-page-node-id="BssOLPAlLOw8EjxlT5NJyD">
+  <div class="wrap" data-page-node-id="5n6yUU78bouOmaEOrBKw6E">
+    <h2 data-page-node-id="r4YQHdAyGeCnVOL7G3CDn3">常见问题</h2>
+    <p class="sub" data-page-node-id="9xeSn5smP2kG6TvJywhEHL">遇到问题先看这里。</p>
+    <details data-page-node-id="Cpt6S2GtEzCZ1WJYFDBZeb"><summary data-page-node-id="j8leaTsbb9RJ4rQMUl6Mxx">不填接口密钥能用吗？</summary><p data-page-node-id="oCuXC36CEWOU1GCTeP9Tos">能用，但只有本地规则层生效，主要能查出常见错别字和标点问题。歧义词、语病、逻辑问题需要大模型，必须配置接口。以 DeepSeek 为例，校对一段 500 字文本的费用大约是千分之二元。</p></details>
+    <details data-page-node-id="zxP9ednF9BeFkw4p9wEsYZ"><summary data-page-node-id="BV0j5YSVfwPGCOmaTExfzq">接口密钥从哪里获取？</summary><p data-page-node-id="SADZfD9jJy4HHfwtEoQsBF">到对应模型厂商的开放平台注册（如 DeepSeek 开放平台、阿里云百炼），在控制台创建接口密钥后粘贴到插件设置页。请使用自己的密钥，不要共用他人的。</p></details>
+    <details data-page-node-id="Pp9EUVXsPCbcPdOA7GxWOI"><summary data-page-node-id="iHDU4nKEHnJr5EINN6GMvA">提示"扩展已更新，请刷新此页面"怎么办？</summary><p data-page-node-id="EvSTFumksx1PgFBSaOM7Oo">说明插件刚被重新加载过，当前网页里还是旧代码。点面板里的"立即刷新页面"按钮，或按 Cmd/Ctrl + R 刷新即可。</p></details>
+    <details data-page-node-id="L6LaokfFeJbhIr34EXryB4"><summary data-page-node-id="iEKK1Rd9o995WPBmMU3eC1">点插件图标没有出现侧边栏？</summary><p data-page-node-id="K5BbQEM8ABhTzedTFo9YZs">确认浏览器版本在 116 及以上（Chrome 地址栏输入 chrome://settings/help，Edge 输入 edge://settings/help 查看）。如果版本没问题，到扩展程序页点插件卡片上的刷新按钮，再试一次。</p></details>
+    <details data-page-node-id="wNIbFWYffKE1g2PcG72EGR"><summary data-page-node-id="BqokkbmRv4SxYv08JqDevG">我的标注数据会被上传吗？</summary><p data-page-node-id="Z8ioHHMxHzXhxFkQ8WnofU">本地规则层完全离线。启用大模型后，选中的文本会发送到你配置的模型接口。处理客户委托或未公开数据时，请开启"敏感数据模式"并使用公司内网模型，同时遵守所在公司的数据安全规定。</p></details>
+    <details data-page-node-id="PdWfU4ZlYyZAZF4Nca6vGV"><summary data-page-node-id="TVcCkGAlo4mLr0tMeILLqA">支持哪些浏览器？</summary><p data-page-node-id="pHXdFgDVCfNYBDsdZlTTsg">Chrome 116 及以上已实测通过；Edge 116 及以上按微软官方文档支持同样的能力，可按上面写的 Edge 步骤安装。360、QQ 等国产浏览器内核版本可能偏旧，不保证可用；Firefox、Safari 暂不支持。</p></details>
+  </div>
+</section>
+
+<!-- 底部下载 -->
+<section class="cta" data-page-node-id="FP3ontHwGCWJ5J9cofxqOt">
+  <div class="wrap" data-page-node-id="OYBM6CnpPhElFlRWAzX64l">
+    <h2 data-page-node-id="lQZNLW7qK3wSqaB8h7wMnB">现在就试试</h2>
+    <p class="sub" style="margin-bottom:0" data-page-node-id="nLwcY9ofoMPFuvAg018CHX">免费、开源，源码托管在 GitHub。</p>
+    <div class="btns" data-page-node-id="Nem1XIqdu9sXO3vPpkAVIz">
+      <a class="btn btn-primary" href="annotation-proofreader-v1.1.3.zip" download data-page-node-id="o2psaaoaOpwSR9gPwqnOLB">⬇ 下载插件 v1.1.3</a>
+      <a class="btn btn-ghost" href="https://github.com/ASEREIN66/annotation-proofreader" target="_blank" rel="noopener" data-page-node-id="x3oHyxkIC18A0sDJ6FkVV2">查看源码仓库</a>
+    </div>
+  </div>
+</section>
+
+<footer data-page-node-id="Tf3jio1pIC5KhOMqUmqwEp">
+  标注校对助手 · v1.1.3 · <a href="https://github.com/ASEREIN66/annotation-proofreader/blob/main/docs/PRD.md" target="_blank" rel="noopener" data-page-node-id="7pqtoZOrfNWxAtOvitEtxa">产品需求文档</a> · <a href="https://github.com/ASEREIN66/annotation-proofreader" target="_blank" rel="noopener" data-page-node-id="ROcC7mlardl0sVSZXmOZCD">GitHub</a>
+</footer>
+
+<div class="toast" id="toast" data-page-node-id="iQ9OsT9o7JFEM7QCqIkC3y">已复制</div>
+<script>
+  document.querySelectorAll(".copy").forEach(function (b) {
+    b.addEventListener("click", function () {
+      var t = b.getAttribute("data-copy");
+      (navigator.clipboard ? navigator.clipboard.writeText(t) : Promise.reject()).then(function () {
+        var el = document.getElementById("toast");
+        el.textContent = "已复制，请粘贴到地址栏";
+        el.classList.add("show");
+        setTimeout(function () { el.classList.remove("show"); }, 1600);
+      }).catch(function () {});
+    });
+  });
+</script>
+</body>
+</html>
